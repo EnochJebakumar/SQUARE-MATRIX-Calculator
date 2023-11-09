@@ -1,0 +1,157 @@
+def det_3():
+    return a11 * (a22 * a33 - a23 * a32) - a12 * (a21 * a33 - a23 * a31) + a13 * (a21 * a32 - a31 * a22)
+
+
+def det_2():
+    return a11*a22 - a21*a12
+
+
+def char_equation_2():
+    s1 = a11 + a22
+    s2 = a11*a22 - a21*a12
+    ev = []
+    for j in range(-200, 200):
+        value = (j ** 2) - (j * s1) + s2
+        if value == 0:
+            ev.append(j)
+
+    if s1 > 0:
+        s1 = -1 * s1
+    else:
+        s1 = f"+{-1 * s1}"
+    if s2 > 0:
+        s2 = f"+{s2}"
+    else:
+        s2 = s2
+    print(f"The Characteristic equation is : A2 {s1}A {s2} = 0")
+    print(f'The Eigen values are: {ev}')
+
+
+def char_equation_3():
+    s1 = a11 + a22 + a33
+    s2 = (a22*a33 - a23*a32) + (a11*a33 - a31*a13) + (a11*a22 - a12*a21)
+    s3 = a11*(a22*a33 - a23*a32) - a12*(a21*a33 - a23*a31) + a13*(a21*a32 - a31*a22)
+    ev = []
+    for j in range(-200, 200):
+        value = (j ** 3) - (j**2)*s1 + (j*s2) - s3
+        if value == 0:
+            ev.append(j)
+
+    if s1 > 0:
+        s1 = -1 * s1
+    else:
+        s1 = f"+{-1 * s1}"
+    if s2 > 0:
+        s2 = f"+{s2}"
+    else:
+        s2 = s2
+    if s3 > 0:
+        s3 = f"-{s3}"
+    else:
+        s3 = f"+{-1 * s3}"
+    print(f"The Characteristic equation is : A3 {s1}A2 {s2}A {s3} = 0")
+    print(f"The Eigen values are : {ev}")
+
+
+def inverse():
+    f1 = a22*a33 - a23*a32
+    f2 = (a21*a33 - a23*a31)*-1
+    f3 = a21*a32 - a22*a31
+    s1 = (a12*a33 - a32*a13)*-1
+    s2 = (a11*a33 - a31*a13)
+    s3 = (a11*a32 - a31*a12)*-1
+    t1 = a12*a23 - a22*a13
+    t2 = (a11*a23 - a21*a13)*-1
+    t3 = a11*a22 - a21*a12
+    print("The Inverse of the Given matrix is:")
+    print(f"1/{det_3()} [{f1}, {s1}, {t3}]")
+    print(f"     [{f2}, {s2}, {t2}]")
+    print(f"     [{f3}, {s3}, {t3}]")
+
+
+flow = True
+while flow:
+    print("\n\t\t\t\t\t\t\t\t\t SQUARE MATRIX CALCULATOR \t\t\t\t")
+    matrix = int(input("For 2x2 matrix enter (2) and for 3x3 enter (3): "))
+    print("\t\t\t Note : Enter the rows of the matrix with space. Example:34 -8 89")
+
+    if matrix == 3:
+        a = input("Enter the first row with spaces:")
+        first_row = a.split()
+        b = input("Enter the second row with spaces:")
+        second_row = b.split()
+        c = input("Enter the third row with spaces:")
+        third_row = c.split()
+        a11 = int(first_row[0])
+        a12 = int(first_row[1])
+        a13 = int(first_row[2])
+        a21 = int(second_row[0])
+        a22 = int(second_row[1])
+        a23 = int(second_row[2])
+        a31 = int(third_row[0])
+        a32 = int(third_row[1])
+        a33 = int(third_row[2])
+
+        print("The matrix you have entered is:")
+        print(f"{first_row}\n{second_row}\n{third_row}")
+        changes = input("Is the matrix you've entered is correct? Enter 'Yes' or 'No': ").lower()
+        if changes == "no":
+            flow = True
+        else:
+            flow = False
+            cond = int(input("Enter the mode: Characteristic equation(1), Determinant(2):, Transpose(3):"
+                             " Inverse(4):"))
+
+            if cond == 1:
+                char_equation_3()
+            elif cond == 2:
+                print(f"The Determinant of the given matrix is:{det_3()}")
+            elif cond == 3:
+                print("The Transpose of the Given matrix is:")
+                print(f"[{a11}, {a21}, {a31}]")
+                print(f"[{a12}, {a22}, {a32}]")
+                print(f"[{a13}, {a23}, {a33}]")
+            elif cond == 4:
+                if det_3() == 0:
+                    print("Inverse doesn't exists since it is singular matrix")
+                else:
+                    inverse()
+
+    elif matrix == 2:
+        a = input("Enter the first row with spaces:")
+        first_row = a.split()
+        b = input("Enter the second row with spaces:")
+        second_row = b.split()
+        a11 = int(first_row[0])
+        a12 = int(first_row[1])
+        a21 = int(second_row[0])
+        a22 = int(second_row[1])
+
+        print("The matrix you have entered is:")
+        print(f"{first_row}\n{second_row}")
+        changes = input("Is the matrix you've entered is correct? Enter 'Yes' or 'No': ").lower()
+        if changes == "no":
+            flow = True
+        else:
+            flow = False
+            cond = int(input("Enter the mode: Characteristic equation (1), Determinant(2), Transpose(3),"
+                             " Inverse (4):"))
+
+            if cond == 2:
+                print(f"The Determinant of the given matrix is: {det_2()}")
+            elif cond == 3:
+                print(f"The Transpose of the given matrix is:")
+                print(f"[{a11}, {a12}]")
+                print(f"[{a21}, {a22}]")
+            elif cond == 1:
+                char_equation_2()
+            elif cond == 4:
+                if det_2() == 0:
+                    print("Inverse doesn't exist because it is a singular matrix.")
+                else:
+                    print("The inverse of the matrix is :")
+                    print(f'1/{det_2()}   [{a22}, {a12*-1}]')
+                    print(f'       [{a21*-1}, {a11}]')
+    else:
+        print("Error ! : Enter the valid code")
+        flow = True
